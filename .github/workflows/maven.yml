@@ -10,10 +10,6 @@ jobs:
     name: Build demo-api
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: ./demo-api
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -34,3 +30,4 @@ jobs:
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           ./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=${{ secrets.DOCKER_USERNAME }}/demo-api
           docker push ${{ secrets.DOCKER_USERNAME }}/demo-api
+s
