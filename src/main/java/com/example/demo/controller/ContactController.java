@@ -17,7 +17,7 @@ public class ContactController {
 		Contact contact = Contact.builder()
 				.firstName("Gretna")
 				.lastName("Chicken")
-				.number("123456789")
+				.number("12345678")
 				.email("Gretna@gmail.com").build();
 		return ResponseEntity.status(HttpStatus.OK).body(contact);
 	}
