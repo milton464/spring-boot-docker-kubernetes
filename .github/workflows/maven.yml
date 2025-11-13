@@ -1,4 +1,4 @@
-name: Demo API
+name: spring-boot-docker-kubernetes
 on:
   push:
     branches: [ "main" ]
@@ -6,8 +6,8 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build-demo-api:
-    name: Build demo-api
+  build-spring-boot-docker-kubernetes:
+    name: Build spring-boot-docker-kubernetes
     runs-on: ubuntu-latest
 
     steps:
@@ -28,6 +28,6 @@ jobs:
         if: ${{ github.ref == 'refs/heads/main' }}
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          ./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=${{ secrets.DOCKER_USERNAME }}/demo-api
-          docker push ${{ secrets.DOCKER_USERNAME }}/demo-api
+          ./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=${{ secrets.DOCKER_USERNAME }}/spring-boot-docker-kubernetes
+          docker push ${{ secrets.DOCKER_USERNAME }}/spring-boot-docker-kubernetes
 s
