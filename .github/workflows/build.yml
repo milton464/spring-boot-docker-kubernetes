@@ -24,13 +24,24 @@ jobs:
       - name: Maven Verify
         run: ./mvnw -ntp verify
 
+      - name: Configure Maven for Jib
+        if: github.ref == 'refs/heads/main'
+        run: |
+          mkdir -p ~/.m2
+          cat > ~/.m2/settings.xml << EOF
+          <settings>
+            <servers>
+              <server>
+                <id>docker.io</id>
+                <username>${{ secrets.DOCKER_USERNAME }}</username>
+                <password>${{ secrets.DOCKER_PASSWORD }}</password>
+              </server>
+            </servers>
+          </settings>
+          EOF
+
       - name: Build & Push with Jib
         if: github.ref == 'refs/heads/main'
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
           ./mvnw compile jib:build \
-            -Djib.to.image=$DOCKER_USERNAME/demo-api \
-            -Djib.to.auth.username=$DOCKER_USERNAME \
-            -Djib.to.auth.password=$DOCKER_PASSWORD
+            -Djib.to.image=${{ secrets.DOCKER_USERNAME }}/demo-api
